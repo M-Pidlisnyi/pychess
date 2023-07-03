@@ -14,15 +14,16 @@ class Chessboard:
     dark_square_color = (0,0,0)
     white_square_color = (255,255,255)
 
-    squares_num = 64
-    rows = int(sqrt(squares_num))
-    cols = int(sqrt(squares_num))
-
-
     squares: list = []
 
-    def __init__(self, win:pg.Surface, size = 800):
+    def __init__(self, win:pg.Surface):
         self.window = win
+
+    def build(self,size = 800, squares_num = 64):
+
+        self.squares_num = squares_num
+        self.rows = int(sqrt(squares_num))
+        self.cols = self.rows
 
         square_size = size/self.rows, size/self.cols
 
@@ -39,11 +40,13 @@ class Chessboard:
 
             x = 10
             y += square_size[1]
+        
 
             
     def draw(self):
        for s in self.squares:
            pg.draw.rect(self.window, s.color, s)
+
 
     def set_colors(self, white:tuple, dark:tuple):
         self.white_square_color = white
@@ -51,6 +54,12 @@ class Chessboard:
 
         for s in self.squares:
             s.set_color()
+    
+    def set_size(self, new_size = 800, new_squares_num = 64 ):
+        self.squares = []
+
+        self.build(new_size, new_squares_num)
+
 
 
 class Square(pg.Rect):

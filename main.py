@@ -18,7 +18,6 @@ def run():
     
     board = Chessboard(window)
 
-
     board.draw()
     game_over = False
     while not game_over:
