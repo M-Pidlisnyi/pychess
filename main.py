@@ -18,6 +18,8 @@ def run():
     
     board = Chessboard(window)
 
+    board.set_font(new_font="Gothic")
+
     board.draw()
     game_over = False
     while not game_over:
