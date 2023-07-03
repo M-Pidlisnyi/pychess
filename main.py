@@ -1,7 +1,8 @@
 import pygame as pg
+from chessboard import Chessboard
 
 WIDTH = 1300
-HEIGHT = 700
+HEIGHT = 820
 
 SIZE = (WIDTH, HEIGHT)
 
@@ -15,14 +16,17 @@ def run():
     window = pg.display.set_mode(SIZE)
     window.fill(BACK)
     
-    game_over = False
+    board = Chessboard(window)
 
+
+    board.draw()
+    game_over = False
     while not game_over:
         for e in pg.event.get():
             if e.type == pg.QUIT:
                 game_over = True
 
-
+    
         pg.display.update()
         pg.time.Clock().tick(FPS)
 
