@@ -1,6 +1,6 @@
 import pygame as pg
-from random import randint
 from math import sqrt
+
 pg.font.init()
 
 COLS=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
@@ -11,7 +11,7 @@ class Chessboard:
     dark_square_color = (0,0,0)
     white_square_color = (255,255,255)
 
-    squares: list = []
+    squares: list['Square'] = []
 
     coords_font = pg.font.Font(None, 40)
     coords_font_size = 40
@@ -43,11 +43,6 @@ class Chessboard:
             y += square_size[1]
         
 
-            
-    
-
-
-
     def set_colors(self, white:tuple, dark:tuple):
         self.white_square_color = white
         self.dark_square_color = dark
@@ -59,17 +54,11 @@ class Chessboard:
         self.size = new_size
         self.squares_num = new_squares_num
 
-    
-
     def set_font(self, new_font=None, new_font_size=40):
         self.coords_font= pg.font.SysFont(new_font, new_font_size)
 
-        self.build()
-
     def draw(self):
-        self.build()
         for s in self.squares:
-            #pg.draw.rect(self.window, s.color, s)
             s.draw()
 
 class Square(pg.Rect):
@@ -107,11 +96,5 @@ class Square(pg.Rect):
         if self.coords[1] == '1':
             col_coords_text = self.coords_font.render(self.coords[0], True, (125,125,125))
             self.board.window.blit(col_coords_text, (self.centerx, self.bottom-self.coords_font_size))
-        
-    
+
                    
-
-
-
-
-
