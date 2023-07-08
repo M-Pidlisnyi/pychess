@@ -18,6 +18,7 @@ def run():
     window.fill(BACK)
     
     board = Chessboard(window)
+
     board.build()
    
     pieces:list[Piece] = []
@@ -39,14 +40,30 @@ def run():
 
 
     game_over = False
+    choosen_piece = None
+
     while not game_over:
+
         for e in pg.event.get():
             if e.type == pg.QUIT:
                 game_over = True
             if e.type == pg.MOUSEBUTTONDOWN and e.button == 1:
-                for p in pieces:
-                    if p.square.collidepoint(e.pos):
-                        p.check_touch()
+                if choosen_piece is None:
+                    for p in pieces:
+                        if p.square.collidepoint(e.pos):
+                            p.check_touch()
+                            choosen_piece = p
+                            break
+                else:
+                    for s in board.squares:
+                        if s.collidepoint(e.pos):
+                            choosen_piece.move(new_square=s)
+                            choosen_piece = None
+
+            
+
+                    
+
         
         board.draw()
         for p in pieces:
