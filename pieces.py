@@ -2,9 +2,10 @@ import pygame as pg
 
 
 class Piece():
-    def __init__(self, size: tuple[int, int], square, is_white = True) -> None:
+    def __init__(self, square:pg.Rect, is_white = True) -> None:
         super().__init__()
         self.name = "abstract piece"
+        size = square.width-25, square.height-25
         self.image = pg.Surface(size)
         if is_white:
             self.image.fill((200,200,200))
