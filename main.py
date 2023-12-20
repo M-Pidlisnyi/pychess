@@ -1,6 +1,6 @@
 import pygame as pg
 from chessboard import Square, ChessBoard, ROWS, COLUMNS, LIGHT_SQUARE_COLOR,DARK_SQUARE_COLOR
-
+from piece import  Piece
 WIDTH = 1300
 HEIGHT = 820
 
@@ -20,18 +20,16 @@ def game():
 
     print(chessboard)
 
-
+    pieces = chessboard.starting_position()
 
     run = True
     while run:
         for e in pg.event.get():
             if e.type == pg.QUIT:
                 run = False
-            if e.type == pg.MOUSEBUTTONDOWN and e.button == 1:
-                for square in chessboard.squares:
-                    if square.collidepoint(e.pos):
-                        square.set_piece("abstract piece")
 
+        for piece in pieces:
+            piece.reset(window)
 
         pg.display.update()
         pg.time.Clock().tick(FPS)
