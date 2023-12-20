@@ -1,4 +1,5 @@
 import pygame as pg
+from chessboard import Square, ChessBoard, ROWS, COLUMNS, LIGHT_SQUARE_COLOR,DARK_SQUARE_COLOR
 
 WIDTH = 1300
 HEIGHT = 820
@@ -14,12 +15,22 @@ def game():
     window = pg.display.set_mode(SIZE)
     window.fill(BACK)
 
+    chessboard = ChessBoard()
+    chessboard.draw(window)
+
+    print(chessboard)
+
+
+
     run = True
     while run:
         for e in pg.event.get():
             if e.type == pg.QUIT:
                 run = False
-
+            if e.type == pg.MOUSEBUTTONDOWN and e.button == 1:
+                for square in chessboard.squares:
+                    if square.collidepoint(e.pos):
+                        square.set_piece("abstract piece")
 
 
         pg.display.update()
