@@ -32,6 +32,8 @@ class ChessBoard:
     def draw(self, window):
         for square in self.squares:
             pg.draw.rect(window, square.color, square)
+            if square.has_piece():
+                square.piece.reset(window)
 
 
     def starting_position(self) -> list[Piece]:
@@ -41,20 +43,28 @@ class ChessBoard:
             #black pieces
             if square.coords[1] == 8:
                 piece_name = COLUMNS[square.coords[0]]
-                pieces.append(Piece(piece_name, square, is_white=False))
+                new_piece = Piece(piece_name, square, is_white=False)
+                pieces.append(new_piece)
+                square.set_piece(new_piece)
 
             #black pawns
-            if square.coords[1] == 7:
-                pieces.append(Piece("pawn", square, is_white=False))
+            elif square.coords[1] == 7:
+                new_piece = Piece("pawn", square, is_white=False)
+                pieces.append(new_piece)
+                square.set_piece(new_piece)
 
             #white pawns
-            if square.coords[1] == 2:
-                pieces.append(Piece("pawn", square, is_white=True))
+            elif square.coords[1] == 2:
+                new_piece = Piece("pawn", square, is_white=True)
+                pieces.append(new_piece)
+                square.set_piece(new_piece)
 
             #white pieces
-            if square.coords[1] == 1:
+            elif square.coords[1] == 1:
                 piece_name = COLUMNS[square.coords[0]]
-                pieces.append(Piece(piece_name, square, is_white=True))
+                new_piece = Piece(piece_name, square, is_white=True)
+                pieces.append(new_piece)
+                square.set_piece(new_piece)
 
         return  pieces
 
@@ -74,15 +84,17 @@ class Square(pg.Rect):
             self.color = LIGHT_SQUARE_COLOR
         else:
             self.color = DARK_SQUARE_COLOR
-        #     self.piece = None
+        self.piece = None
 
+    def set_piece(self, piece):
+        if self.piece:
+            self.piece = None
+            print("already a piece at " + str(self.coords))
+        else:
+            print(str(piece) + " placed at " + str(self.coords))
+        self.piece = piece
 
-    # def set_piece(self, piece):
-    #     if self.piece:
-    #         self.piece = None
-    #         print("already a piece at " + str(self.coords))
-    #     else:
-    #         print(str(piece) + " placed at " + str(self.coords))
-    #     self.piece = piece
+    def has_piece(self) -> bool:
+        return self.piece is not None
 
 
